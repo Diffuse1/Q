@@ -1,82 +1,85 @@
-'''class art:
-    def __init__(self,marca,id, nombre,precio=None,kg=None,descuento=None,piezas=None):
+class art:
+    def __init__(self, idArt, marca, nombre, precio=None, peso=None, descuento=None, inventario=None):
+        self.id = idArt
         self.marca = marca
         self.nombre = nombre
         self.precio = precio
-        self.kg = kg
-        self.descuentos = descuento
-        self.id = id
-        self. piezas = piezas
+        self.peso = peso
+        self.descuento = descuento        
+        self.inventario = inventario
         pass
-class cart(art):
-    def __init__(self, marca, nombre, precio, kg, descuento, id, piezas,articulo, preciofinal,iva,ahorro):
-        super().__init__(marca, nombre, precio, kg, descuento, id, piezas)
-        self.articilo = articulo
-        self.preciofinal = preciofinal
-        self.iva = iva
-        self.ahorro = ahorro
-        pass
+    
     def __str__(self):
-        return f"id: {self.id} - marca: {self.marca} - nombre: {self.nombre} - precio: {self.precio} - kg: {self.kg} - descuentos: {self.descuentos} - piezas: {self.piezas}"
-class carrito():
-    def __int__(self, idcart):
-        self.idcart = idcart
-        self.articulos = []
-        pass
-    def __str__(self):
-        printCarrito = f'Carrito número: {self.idcart}'
-        for i in range(0,len(self.articulos),1):
-            printCarrito += f'Articulos: {self.articulos[i]}'
-        return printCarrito
-    def addArticulo(self, idArt):
-        self.articulos.append(idArt)
-        return 0
-    pass'''
-class art():
-    def __init__(self,id,marca,nombre,precio=None,peso=None,descuento=None,inv=None):
-        self.id= id
-        self.marca= marca
-        self.nombre= nombre
-        self.precio= precio
-        self.peso= peso
-        self.descuentos= descuento
-        self.inv= inv
-        pass
-    def __str__(self):
-        return f"id: {self.id} - marca: {self.marca} - nombre: {self.nombre} - precio: {self.precio} - peso: {self.peso} - descuentos: {self.descuento} - inv: {self.inv}"
-    def setPrecio(self,precio):
-        self.precio =precio
-        return 0
-    def setPeso(self,peso):
-        self.peso =peso
-        return 0
-    def setMarca(self,marca):
-        self.marca =marca
-        return 0
-    def setNombre(self,nombre):
-        self.nombre =nombre
-        return 0
-    def setDescuento(self,descuento):
-        self.descuento =descuento
-        return 0
-    def setInv(self,inv):
-        self.inv =inv
-        return 0
-    def setId(self,id):
-        self.id =id
-        return 0
-class carrito():
-    def __int__(self, idcart):
-        self.idcart = idcart
-        self.articulos = []
-        pass
-    def __str__(self):
-        printCarrito = f'Carrito número: {self.idcart}'
-        for i in range(0,len(self.articulos),1):
-            printCarrito += f'Articulos: {self.articulos[i]}'
-        return printCarrito
-    def addArticulo(self, idArt):
-        self.articulos.append(idArt)
+        return f"idArt: {self.id}, Marca: {self.marca}, nombre: {self.nombre}, precio: {self.precio}, peso: {self.peso}, descuento: {self.descuento}, inventario: {self.inventario}"
+    
+    def setPrecio(self, precio):
+        self.precio = precio
         return 0
 
+class cart(art):
+     def __init__(self, marca, nombre, precio, peso, descuento, id, piezas, costoTotal, iva, ahorroTotal):
+         super().__init__(marca, nombre, precio, peso, descuento, id, piezas)
+         self.costoTotal = costoTotal
+         self.iva = iva
+         self.ahorroTotal = ahorroTotal
+def setPeso(self,peso):
+        self.peso = peso
+        return 0
+def setDescuento(self,descuento):
+        self.descuento = descuento
+        return 0
+def setInventario(self,inventario):
+        self.inventario = inventario
+        return 0
+
+def getPrecioDcto(self):
+        if self.descuento != None:
+            precioDescuento = self.precio - (self.precio * (self.descuento/100))
+        else:
+            precioDescuento = self.precio
+        return precioDescuento
+
+def getDcto(self):
+        if self.descuento != None:
+            precioDcto = ( self.precio * (self.descuento/100))
+        else:
+            precioDcto = 0
+        return precioDcto
+
+class cart():
+    def __init__(self, idCart):
+         self.idCart = idCart
+         self.objArticulos = []        
+         pass
+
+    def __str__(self):
+        printCart = f"Ticket #: {self.idCart} \n"
+        if len(self.objArticulos) >= 1:
+            for i in range(0, len(self.objArticulos),1):
+                printCart += f"{self.objArticulos[i].id} {self.objArticulos[i].nombre} $ {self.objArticulos[i].precio} mxn\n -${self.objArticulos[i].getDcto()}mxn\n"
+        else:
+            printCart += f"Carrito vacio"
+        return printCart
+
+    def addArticulo(self, objArt):
+        if type (objArt.inventario) != type(None):
+            if objArt.inventario >= 1:
+                objArt.inventario -= 1
+                self.objArticulos.append(objArt)
+            else:
+                print(f"No hay inventario de: ({objArt.nombre})")
+        else:
+            print("Inventario no definido")
+        return 0
+    def getTotal(self):
+        total = 0
+        for i in range(0, len(self.objArticulos),1):
+            total += self.objArticulos[i].getPrecioDcto()
+        return total 
+
+    def getTotalDcto(self):
+        total = 0
+        for i in range(0, len(self.objArticulos),1):
+            total += self.objArticulos[i].getDcto()
+        return total 
         pass
